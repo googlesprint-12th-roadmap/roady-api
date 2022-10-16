@@ -32,4 +32,9 @@ class JpaRoadmapPersistenceOutput(
         roadmap.nodes.forEach { roadmapNodeRepository.save(it.toEntity(entity.idx)) }
         return entity.idx
     }
+
+    override fun deleteById(idx: Long) {
+        roadmapRepository.deleteById(idx)
+        roadmapNodeRepository.deleteAllByRoadmapIdx(idx)
+    }
 }

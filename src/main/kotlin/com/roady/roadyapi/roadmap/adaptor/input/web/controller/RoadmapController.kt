@@ -8,6 +8,7 @@ import com.roady.roadyapi.roadmap.adaptor.input.web.data.response.EditRoadmapRes
 import com.roady.roadyapi.roadmap.adaptor.input.web.extension.toDomain
 import com.roady.roadyapi.roadmap.adaptor.input.web.property.RoadmapProperty
 import com.roady.roadyapi.roadmap.application.port.input.RoadmapUseCase
+import com.roady.roadyapi.roadmap.domain.DeleteRoadmap
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -53,5 +54,17 @@ class RoadmapController(
 
         val response = EditRoadmapResponse(roadmapIdx)
         return ResponseEntity.ok(response)
+    }
+
+    @DeleteMapping("/{idx}")
+    fun deleteRoadmap(@PathVariable idx: Long,
+                      @RequestHeader("Authorization") token: String
+    ): ResponseEntity<Unit> {
+        val accountIdx = accountQueryUseCase.findByAccessToken(token).idx
+        val domain = DeleteRoadmap(idx, accountIdx)
+
+        roadmapUseCase.deleteRoadmap(domain)
+
+        return ResponseEntity.ok().build()
     }
 }

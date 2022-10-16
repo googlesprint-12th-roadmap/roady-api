@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface RoadmapNodeRepository: JpaRepository<RoadmapNodeEntity, Long> {
     fun findAllByRoadmapIdx(roadmapIdx: Long): List<RoadmapNodeEntity>
+    fun deleteAllByRoadmapIdx(roadmapIdx: Long)
 }

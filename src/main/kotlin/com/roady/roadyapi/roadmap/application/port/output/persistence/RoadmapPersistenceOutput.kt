@@ -7,4 +7,5 @@ interface RoadmapPersistenceOutput {
     fun existsByIdx(idx: Long): Boolean
     fun findById(idx: Long): Roadmap
     fun save(roadmap: Roadmap): Long
+    fun deleteById(idx: Long)
 }
