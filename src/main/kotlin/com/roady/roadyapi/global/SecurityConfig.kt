@@ -12,7 +12,9 @@ import org.springframework.security.web.SecurityFilterChain
 class SecurityConfig {
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain =
-        http.authorizeRequests()
+        http.cors().disable()
+            .csrf().disable()
+            .authorizeRequests()
             .anyRequest().permitAll()
             .and()
             .build()
