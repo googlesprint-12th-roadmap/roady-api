@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
 @RequestMapping("/api/v1/roadmap")
 class RoadmapController(
     private val roadmapProperty: RoadmapProperty,
