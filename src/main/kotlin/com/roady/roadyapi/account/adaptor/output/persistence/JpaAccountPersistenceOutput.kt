@@ -19,4 +19,7 @@ class JpaAccountPersistenceOutput(
 
     override fun existsById(id: String): Boolean =
         accountRepository.existsById(id)
+
+    override fun findById(id: String): Account =
+        accountRepository.findById(id).toDomain()
 }
