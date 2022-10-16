@@ -1,5 +1,7 @@
 package com.roady.roadyapi.account.adaptor.input.web.controller
 
+import com.roady.roadyapi.account.adaptor.input.web.data.response.LoginResponse
+import com.roady.roadyapi.account.adaptor.input.web.data.request.LoginRequest
 import com.roady.roadyapi.account.adaptor.input.web.data.request.RegisterRequest
 import com.roady.roadyapi.account.adaptor.input.web.data.response.RegisterResponse
 import com.roady.roadyapi.account.adaptor.input.web.extension.toDomain
@@ -20,6 +22,14 @@ class AccountController(
         val domain = request.toDomain()
         val accountIdx = accountUseCase.register(domain)
         val response = RegisterResponse(accountIdx)
+        return ResponseEntity.ok(response)
+    }
+
+    @PostMapping("/login")
+    fun login(@RequestBody request: LoginRequest): ResponseEntity<LoginResponse> {
+        val domain = request.toDomain()
+        val result = accountUseCase.login(domain)
+        val response = LoginResponse(result.accessToken, result.refreshToken)
         return ResponseEntity.ok(response)
     }
 }

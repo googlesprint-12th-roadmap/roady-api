@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface AccountRepository: JpaRepository<AccountEntity, Long> {
     fun existsById(id: String): Boolean
+    fun findById(id: String): AccountEntity
 }
