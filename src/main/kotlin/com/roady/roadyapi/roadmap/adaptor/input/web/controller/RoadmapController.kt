@@ -2,7 +2,9 @@ package com.roady.roadyapi.roadmap.adaptor.input.web.controller
 
 import com.roady.roadyapi.account.application.port.input.AccountQueryUseCase
 import com.roady.roadyapi.roadmap.adaptor.input.web.data.request.CreateRoadmapRequest
+import com.roady.roadyapi.roadmap.adaptor.input.web.data.request.EditRoadmapRequest
 import com.roady.roadyapi.roadmap.adaptor.input.web.data.response.CreateRoadmapResponse
+import com.roady.roadyapi.roadmap.adaptor.input.web.data.response.EditRoadmapResponse
 import com.roady.roadyapi.roadmap.adaptor.input.web.extension.toDomain
 import com.roady.roadyapi.roadmap.adaptor.input.web.property.RoadmapProperty
 import com.roady.roadyapi.roadmap.application.port.input.RoadmapUseCase
@@ -23,9 +25,9 @@ class RoadmapController(
         val accountIdx = accountQueryUseCase.findByAccessToken(token).idx
         val domain = request.toDomain(accountIdx)
 
-        val roadmapId = roadmapUseCase.createRoadmap(domain)
+        val roadmapIdx = roadmapUseCase.createRoadmap(domain)
 
-        val response = CreateRoadmapResponse(roadmapId)
+        val response = CreateRoadmapResponse(roadmapIdx)
         return ResponseEntity.ok(response)
     }
 
@@ -34,9 +36,22 @@ class RoadmapController(
         val accountIdx = roadmapProperty.guestAccountIdx
         val domain = request.toDomain(accountIdx)
 
-        val roadmapId = roadmapUseCase.createRoadmap(domain)
+        val roadmapIdx = roadmapUseCase.createRoadmap(domain)
 
-        val response = CreateRoadmapResponse(roadmapId)
+        val response = CreateRoadmapResponse(roadmapIdx)
+        return ResponseEntity.ok(response)
+    }
+    @PutMapping("/{idx}")
+    fun editRoadmap(@PathVariable idx: Long,
+                    @RequestHeader("Authorization") token: String,
+                    @RequestBody request: EditRoadmapRequest
+    ): ResponseEntity<EditRoadmapResponse> {
+        val accountIdx = accountQueryUseCase.findByAccessToken(token).idx
+        val domain = request.toDomain(idx, accountIdx)
+
+        val roadmapIdx = roadmapUseCase.editRoadmap(domain)
+
+        val response = EditRoadmapResponse(roadmapIdx)
         return ResponseEntity.ok(response)
     }
 }

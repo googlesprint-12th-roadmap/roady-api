@@ -1,8 +1,9 @@
 package com.roady.roadyapi.roadmap.domain
 
 data class Roadmap(
-    val id: Long,
+    val idx: Long = 0,
+    val ownerIdx: Long,
+    val rootIdx: Long,
     val name: String,
-    val nodes: Set<RoadmapNode>,
-    val rootId: Long
+    val nodes: Set<RoadmapNode>
 )

@@ -8,5 +8,6 @@ class RoadmapEntity(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val idx: Long = 0,
     val ownerIdx: Long,
+    val rootIdx: Long,
     val name: String
 )
