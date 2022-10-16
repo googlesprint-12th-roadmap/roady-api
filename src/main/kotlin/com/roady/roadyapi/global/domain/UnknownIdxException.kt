@@ -1,4 +1,4 @@
-package com.roady.roadyapi.account.domain
+package com.roady.roadyapi.global.domain
 
 import java.lang.RuntimeException
 

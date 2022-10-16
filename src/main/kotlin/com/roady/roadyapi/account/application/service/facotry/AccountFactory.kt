@@ -4,7 +4,7 @@ import com.roady.roadyapi.account.adaptor.output.persistence.extension.toDomain
 import com.roady.roadyapi.account.adaptor.output.persistence.repository.AccountRepository
 import com.roady.roadyapi.account.domain.Account
 import com.roady.roadyapi.account.domain.Register
-import com.roady.roadyapi.account.domain.UnknownIdxException
+import com.roady.roadyapi.global.domain.UnknownIdxException
 import com.roady.roadyapi.account.domain.WrongTokenException
 import org.springframework.stereotype.Component
 

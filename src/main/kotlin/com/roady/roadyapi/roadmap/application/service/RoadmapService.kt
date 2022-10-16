@@ -1,6 +1,6 @@
 package com.roady.roadyapi.roadmap.application.service
 
-import com.roady.roadyapi.account.domain.UnknownIdxException
+import com.roady.roadyapi.global.domain.UnknownIdxException
 import com.roady.roadyapi.roadmap.application.port.input.RoadmapUseCase
 import com.roady.roadyapi.roadmap.application.port.output.persistence.RoadmapNodePersistenceOutput
 import com.roady.roadyapi.roadmap.application.port.output.persistence.RoadmapPersistenceOutput

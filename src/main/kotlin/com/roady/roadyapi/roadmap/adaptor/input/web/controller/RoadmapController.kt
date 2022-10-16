@@ -72,9 +72,9 @@ class RoadmapController(
         return ResponseEntity.ok().build()
     }
 
-    @GetMapping("/query/{id}")
-    fun queryRoadmapById(@PathVariable id: Long): ResponseEntity<RoadmapQueryResponse> {
-        val roadmap = roadmapQueryUseCase.findById(id)
+    @GetMapping("/query/{idx}")
+    fun queryRoadmapById(@PathVariable idx: Long): ResponseEntity<RoadmapQueryResponse> {
+        val roadmap = roadmapQueryUseCase.findById(idx)
 
         val response = RoadmapQueryResponse(roadmap.idx, roadmap.ownerIdx, roadmap.rootIdx, roadmap.name, roadmap.nodes)
         return ResponseEntity.ok(response)
