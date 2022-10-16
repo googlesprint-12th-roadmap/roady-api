@@ -5,8 +5,10 @@ import com.roady.roadyapi.roadmap.adaptor.input.web.data.request.CreateRoadmapRe
 import com.roady.roadyapi.roadmap.adaptor.input.web.data.request.EditRoadmapRequest
 import com.roady.roadyapi.roadmap.adaptor.input.web.data.response.CreateRoadmapResponse
 import com.roady.roadyapi.roadmap.adaptor.input.web.data.response.EditRoadmapResponse
+import com.roady.roadyapi.roadmap.adaptor.input.web.data.response.RoadmapQueryResponse
 import com.roady.roadyapi.roadmap.adaptor.input.web.extension.toDomain
 import com.roady.roadyapi.roadmap.adaptor.input.web.property.RoadmapProperty
+import com.roady.roadyapi.roadmap.application.port.input.RoadmapQueryUseCase
 import com.roady.roadyapi.roadmap.application.port.input.RoadmapUseCase
 import com.roady.roadyapi.roadmap.domain.DeleteRoadmap
 import org.springframework.http.ResponseEntity
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*
 class RoadmapController(
     private val roadmapProperty: RoadmapProperty,
     private val roadmapUseCase: RoadmapUseCase,
+    private val roadmapQueryUseCase: RoadmapQueryUseCase,
     private val accountQueryUseCase: AccountQueryUseCase
 ) {
     @PostMapping
@@ -66,5 +69,13 @@ class RoadmapController(
         roadmapUseCase.deleteRoadmap(domain)
 
         return ResponseEntity.ok().build()
+    }
+
+    @GetMapping("/query/{id}")
+    fun queryRoadmapById(@PathVariable id: Long): ResponseEntity<RoadmapQueryResponse> {
+        val roadmap = roadmapQueryUseCase.findById(id)
+
+        val response = RoadmapQueryResponse(roadmap.idx, roadmap.ownerIdx, roadmap.rootIdx, roadmap.name, roadmap.nodes)
+        return ResponseEntity.ok(response)
     }
 }
