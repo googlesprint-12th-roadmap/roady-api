@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service
 class RoadmapService(
     private val roadmapPersistenceOutput: RoadmapPersistenceOutput,
     private val roadmapNodePersistenceOutput: RoadmapNodePersistenceOutput,
-    private val roadmapFacotry: RoadmapFactory
+    private val roadmapFactory: RoadmapFactory
 ): RoadmapUseCase {
     override fun createRoadmap(create: CreateRoadmap): Long {
-        val roadmap = roadmapFacotry.of(create)
+        val roadmap = roadmapFactory.of(create)
         val roadmapIdx = roadmapPersistenceOutput.save(roadmap)
         roadmapNodePersistenceOutput.saveAll(roadmapIdx, create.nodes)
         return roadmapIdx
@@ -25,7 +25,7 @@ class RoadmapService(
         validate(edit)
 
         val roadmap = roadmapPersistenceOutput.findById(edit.idx)
-        val editedRoadmap = roadmapFacotry.of(roadmap, edit)
+        val editedRoadmap = roadmapFactory.of(roadmap, edit)
 
         return roadmapPersistenceOutput.save(editedRoadmap)
     }
