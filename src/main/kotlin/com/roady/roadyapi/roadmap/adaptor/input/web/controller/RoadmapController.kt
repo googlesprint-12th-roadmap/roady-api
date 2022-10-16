@@ -73,10 +73,17 @@ class RoadmapController(
     }
 
     @GetMapping("/query/{idx}")
-    fun queryRoadmapById(@PathVariable idx: Long): ResponseEntity<RoadmapQueryResponse> {
+    fun queryRoadmapById(@PathVariable idx: Long,
+                         @RequestHeader("Authorization") token: String?
+    ): ResponseEntity<RoadmapQueryResponse> {
+        val canEdit = token?.let {
+                val accountIdx = accountQueryUseCase.findByAccessToken(token).idx
+                roadmapQueryUseCase.canEdit(idx, accountIdx)
+            }?: false
+
         val roadmap = roadmapQueryUseCase.findById(idx)
 
-        val response = RoadmapQueryResponse(roadmap.idx, roadmap.ownerIdx, roadmap.rootIdx, roadmap.name, roadmap.nodes)
+        val response = RoadmapQueryResponse(roadmap.idx, roadmap.ownerIdx, roadmap.rootIdx, roadmap.name, roadmap.nodes, canEdit)
         return ResponseEntity.ok(response)
     }
 }

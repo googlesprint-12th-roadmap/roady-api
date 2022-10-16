@@ -7,5 +7,6 @@ data class RoadmapQueryResponse(
     val ownerIdx: Long,
     val rootIdx: Long,
     val name: String,
-    val nodes: Set<RoadmapNode>
+    val nodes: Set<RoadmapNode>,
+    val canEdit: Boolean
 )
