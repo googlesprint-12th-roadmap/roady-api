@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface RoadmapRepository: JpaRepository<RoadmapEntity, Long> {
     fun existsByIdx(idx: Long): Boolean
     fun findByIdx(idx: Long): RoadmapEntity
+    fun deleteAllByIdx(idx: Long)
 }

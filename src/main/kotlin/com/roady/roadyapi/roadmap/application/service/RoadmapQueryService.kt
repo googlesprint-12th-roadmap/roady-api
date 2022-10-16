@@ -13,13 +13,13 @@ class RoadmapQueryService(
     override fun findById(idx: Long): Roadmap {
         if(!roadmapPersistenceOutput.existsByIdx(idx)) throw UnknownIdxException("해당 Idx를 가진 로드맵이 존재하지 않습니다!", idx)
 
-        return roadmapPersistenceOutput.findById(idx)
+        return roadmapPersistenceOutput.findByIdx(idx)
     }
 
     override fun canEdit(idx: Long, accountIdx: Long): Boolean {
         if(!roadmapPersistenceOutput.existsByIdx(idx)) throw UnknownIdxException("해당 Idx를 가진 로드맵이 존재하지 않습니다!", idx)
 
-        val roadmap = roadmapPersistenceOutput.findById(idx)
+        val roadmap = roadmapPersistenceOutput.findByIdx(idx)
         return roadmap.ownerIdx == accountIdx
     }
 }

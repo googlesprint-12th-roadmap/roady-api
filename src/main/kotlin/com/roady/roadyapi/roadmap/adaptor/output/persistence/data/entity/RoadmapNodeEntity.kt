@@ -6,7 +6,8 @@ import javax.persistence.*
 @Entity
 @Table(name = "roadmap_node")
 class RoadmapNodeEntity(
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val primaryKey: Long = 0,
     val idx: Long,
     val roadmapIdx: Long,
     val title: String,

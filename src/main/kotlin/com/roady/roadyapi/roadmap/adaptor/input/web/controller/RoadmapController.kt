@@ -24,10 +24,12 @@ class RoadmapController(
     private val accountQueryUseCase: AccountQueryUseCase
 ) {
     @PostMapping
-    fun createRoadmap(@RequestHeader("Authorization") token: String,
+    fun createRoadmap(@RequestHeader(name = "Authorization", required = false) token: String?,
                       @RequestBody request: CreateRoadmapRequest
     ): ResponseEntity<CreateRoadmapResponse> {
-        val accountIdx = accountQueryUseCase.findByAccessToken(token).idx
+        val accountIdx = token?.let {
+            accountQueryUseCase.findByAccessToken(token).idx
+        }?: roadmapProperty.guestAccountIdx
         val domain = request.toDomain(accountIdx)
 
         val roadmapIdx = roadmapUseCase.createRoadmap(domain)
@@ -36,16 +38,6 @@ class RoadmapController(
         return ResponseEntity.ok(response)
     }
 
-    @PostMapping("/guest")
-    fun createRoadmap(@RequestBody request: CreateRoadmapRequest): ResponseEntity<CreateRoadmapResponse> {
-        val accountIdx = roadmapProperty.guestAccountIdx
-        val domain = request.toDomain(accountIdx)
-
-        val roadmapIdx = roadmapUseCase.createRoadmap(domain)
-
-        val response = CreateRoadmapResponse(roadmapIdx)
-        return ResponseEntity.ok(response)
-    }
     @PutMapping("/{idx}")
     fun editRoadmap(@PathVariable idx: Long,
                     @RequestHeader("Authorization") token: String,
@@ -74,7 +66,7 @@ class RoadmapController(
 
     @GetMapping("/query/{idx}")
     fun queryRoadmapById(@PathVariable idx: Long,
-                         @RequestHeader("Authorization") token: String?
+                         @RequestHeader(name = "Authorization", required = false) token: String?
     ): ResponseEntity<RoadmapQueryResponse> {
         val canEdit = token?.let {
                 val accountIdx = accountQueryUseCase.findByAccessToken(token).idx
